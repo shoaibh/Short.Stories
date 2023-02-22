@@ -22,7 +22,7 @@ const registerFields = [
     fieldName: "firstName",
     type: "text",
     placeholder: "FirstName",
-    rules: {},
+    rules: {required: true},
   },
   {
     fieldName: "lastName",
@@ -68,8 +68,9 @@ export default function Authentication({ login }) {
                 type={type}
                 placeholder={placeholder}
                 {...register(fieldName, rules)}
-                className={`border-blue-500 w-full ${Styles.input_type_1} `}
+                className={`${Styles.input_type_1} ${errors[fieldName] ?'outline-red-500':null} focus:shadow-lg w-full  `}
               />
+              {errors[fieldName] && <span className="text-red-500 text-xs ml-1">{fieldName} is required</span>}
             </div>
           ))}
           <button

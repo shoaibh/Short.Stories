@@ -1,10 +1,15 @@
-import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useContext } from "react";
+import { Outlet } from "react-router-dom";
+import Header from "../components/Header";
+import { RootContext } from "../context/RootContext";
 
 export default function Home() {
-    const data = useLoaderData()
-    console.log(data)
+  // notify.success("Logged in")
+ 
   return (
-    <div>Home </div>
-  )
+    <div>
+      <Header />
+      <Outlet />
+    </div>
+  );
 }

@@ -5,7 +5,6 @@ import { RootContext } from "../context/RootContext";
 
 export default function Authentication() {
   const { User } = useContext(RootContext);
-console.log(User)
   if(User)
   return  <Navigate to='/home'/>
 

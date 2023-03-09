@@ -21,6 +21,7 @@ export class StoryService {
       const res = await this.story.find({
         select: {
           user: {
+            id: true,
             userName: true,
           },
         },

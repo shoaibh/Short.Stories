@@ -13,16 +13,15 @@ import { jwtSign } from "src/util/jwt";
 export class AuthService {
   constructor(@InjectRepository(User) private user: Repository<User>) {}
 
-  async register(data: any) {
+  async register(data: any,role:string) {
     const hashpassword = await bcrypt.hash(data.password, 10);
     const user = this.user.create({
       ...data,
-      role: "regular",
+      role: role,
       password: hashpassword,
     });
     try {
       const res: any = await this.user.save(user);
-      console.log(res["id"]);
       const token = jwtSign({ id: res.id, role: res.role });
       return { jwttoken: token, user: serializeUser(res) };
     } catch (err) {

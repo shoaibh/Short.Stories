@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import Auth from "../components/Auth";
 import AuthGuard from "../guard/AuthGuard";
 import Authentication from "../Views/Authentication";
+import Dashboard from "../Views/Dashboard";
 import Home from "../Views/Home";
 import Profile from "../Views/Profile";
 import Stories from "../Views/Stories";
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <AuthGuard element={<Stories />} />,
+      },
+      {
+        path: "dashboard",
+        element: <AuthGuard element={<Dashboard/>} role={['admin']} />,
       },
       {
         path: "profile/:id",

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { loginApi, registerApi } from "../axios/apis/authentication";
+import { loginApi, registerApi } from "../axios/apis/authentication.api";
 import { RootContext } from "../context/RootContext";
 import Styles from "../styles";
 import notify from "../utils/Notify";

@@ -1,22 +1,25 @@
 import { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/loader.png";
 import { RootContext } from "../context/RootContext";
-import { Dropdown, Space, Avatar, MenuProps } from "antd";
+import { Dropdown, Avatar } from "antd";
 import avatar from "../assets/avatar.png";
 
 const LINKS = [
   {
     title: "Home",
+    authorized: [],
     to: "/",
   },
   {
     title: "Dashboard",
+    authorized: ["admin"],
     to: "/dashboard",
   },
 ];
 export default function Header() {
-  const { setUser,User }: any = useContext(RootContext);
+  const { setUser, User }: any = useContext(RootContext);
+  const nav = useNavigate()
   const HoverOptions: any = [
     {
       key: "1",
@@ -39,18 +42,22 @@ export default function Header() {
     setUser(null);
   }
   return (
-    <div className="bg-twitter flex items-center justify-between px-2">
-      <img src={logo} alt="logo" className="h-10 w-10 " />
+    <div className="bg-twitter flex items-center justify-between px-5 py-2">
+      <img src={logo} alt="logo" className="h-14 w-14 cursor-pointer " onClick={()=>nav('/home')} />
       <div className="flex space-x-2 items-center">
-        {LINKS.map((item, i) => (
-          <div key={i}>
-            <NavLink to={item.to} className="text-sm font-semibold">
-              {item.title}
-            </NavLink>
-          </div>
-        ))}
+        {LINKS.map((item, i) => {
+          if (!item.authorized.length || item.authorized.includes(User.role))
+            return (
+              <div key={i}>
+                <NavLink to={item.to} className="text-lg font-semibold">
+                  {item.title}
+                </NavLink>
+              </div>
+            );
+          return null;
+        })}
         <Dropdown menu={{ items: HoverOptions }} className="cursor-pointer">
-          <Avatar size={30} icon={<img src={avatar} alt="avatar" />} />
+          <Avatar size={35} icon={<img src={avatar} alt="avatar" />} />
         </Dropdown>
       </div>
     </div>

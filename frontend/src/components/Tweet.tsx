@@ -1,26 +1,32 @@
-import React from "react";
 import { Avatar } from "antd";
-import Styles from "../styles";
+import { useNavigate } from "react-router-dom";
 
-export default function Tweet() {
-  const date = new Date().toDateString().split("GMT");
+export default function Tweet({ data }: any) {
+  const { title, user, content, created_at } = data;
+  const date = new Date(created_at).toDateString();
+  const nav = useNavigate();
+  const onClick = () => nav(`/profile/${user.id}`);
+
   return (
-    <div className="bg-gray-200 rounded-xl flex items-stretch space-x-4 p-4">
-      <div className="">
-        <Avatar>t</Avatar>
-      </div>
-      <div className="flex flex-col">
+    <div className="bg-sky-300 rounded-xl flex items-stretch space-x-4 p-4">
+      {user && (
+        <div>
+          <Avatar className="cursor-pointer" onClick={onClick}>
+            {user.userName[0]}
+          </Avatar>
+        </div>
+      )}
+      <div className="flex flex-col w-full text-base">
         <p
-          className={
-              Styles.input_type_1+
-            " w-full text-sm font-medium pb-8 bg-transparent" 
-          }
+          className={" capitalize bg-transparent text-white  font-medium mb-1"}
         >
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti
-          veritatis quia maxime maiores aut commodi perspiciatis dolore aliquam,
-          quae est. Quisquam, nemo expedita!
+          {user ? user.userName : "You"}
         </p>
-        <p className="text-xs text-gray-50 mt-4 self-end">{date}</p>
+        <div className={"bg-gray-50 p-1 rounded-xl w-full font-medium pb-8 "}>
+          <p>{title}</p>
+          <p>{content}</p>
+        </div>
+        <p className="font-semibold text-white mt-4 self-end">{date}</p>
       </div>
     </div>
   );

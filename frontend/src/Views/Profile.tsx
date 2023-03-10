@@ -24,10 +24,11 @@ export default function Profile() {
       </div>
     );
   return (
-    <div className="py-9 px-5">
+    <div className="py-9 px-5 md:w-5/6 md:mx-auto">
       <div className="flex flex-col justify-center items-center">
         <Avatar
-          className="h-20 w-20  text-3xl flex justify-center items-center object-contain"
+        size={165}
+          className="  text-3xl flex justify-center items-center object-contain"
           src={ava}
         >
           t
@@ -43,9 +44,9 @@ export default function Profile() {
           ) : null
         )}
       </div>
-      <div className={Styles.container}>
-        <p className="text-center font-bold ">Stoires</p>
-        <div className=" flex flex-col space-y-3 mt-2 text-black text-xl">
+      <div className={`${Styles.container} py-9 text-lg`}>
+        <p className="text-center  font-bold ">Stories</p>
+        <div className=" flex flex-col space-y-5 mt-2 text-black text-xl items-center">
           {data?.stories.map((story: any) => (
             <Tweet key={story.id} data={story} />
           ))}

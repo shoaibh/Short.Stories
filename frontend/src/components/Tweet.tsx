@@ -8,7 +8,7 @@ export default function Tweet({ data }: any) {
   const onClick = () => nav(`/profile/${user.id}`);
 
   return (
-    <div className="bg-sky-300 rounded-xl flex items-stretch space-x-4 p-4">
+    <div className="bg-sky-300 rounded-xl flex items-stretch space-x-4 p-4 md:w-5/6">
       {user && (
         <div>
           <Avatar className="cursor-pointer" onClick={onClick}>
@@ -22,7 +22,7 @@ export default function Tweet({ data }: any) {
         >
           {user ? user.userName : "You"}
         </p>
-        <div className={"bg-gray-50 p-1 rounded-xl w-full font-medium pb-8 "}>
+        <div className={"bg-gray-50 py-1 px-3 rounded-xl w-full font-medium pb-8 "}>
           <p>{title}</p>
           <p>{content}</p>
         </div>

@@ -7,6 +7,7 @@ import { useMutation } from "react-query";
 import { createNewTweet } from "../axios/apis/tweets.api";
 import notify from "../utils/Notify";
 import { Loading } from "./Loader";
+import { AxiosError } from "axios";
 export default function CreateTweet() {
   const {
     register,
@@ -20,17 +21,19 @@ export default function CreateTweet() {
     onSuccess: () => {
       notify.success("new tweet created successfully");
     },
+    onError: (err: AxiosError<{message:string}>) => {
+      notify.error(err.response?.data.message??'something went wrong');
+    },
   });
 
   const onSubmit = (data: any) => {
     createTweet.mutate(data);
     reset();
   };
-  // if(errors) notify.error("errors")
   return (
-    <div className="bg-gray-200 rounded-lg flex items-stretch space-x-4 p-4 pb-8">
+    <div className="bg-gray-200 rounded-lg flex items-stretch space-x-4 p-4 pb-8 w-full md:w-5/6">
       <div>
-        <Avatar>{User?.userName[0]}</Avatar>
+        <Avatar>{User?.userName?.[0]}</Avatar>
       </div>
       {createTweet.isLoading ? (
         <Loading />

@@ -19,7 +19,7 @@ const LINKS = [
 ];
 export default function Header() {
   const { setUser, User }: any = useContext(RootContext);
-  const nav = useNavigate()
+  const nav = useNavigate();
   const HoverOptions: any = [
     {
       key: "1",
@@ -43,21 +43,30 @@ export default function Header() {
   }
   return (
     <div className="bg-twitter flex items-center justify-between px-5 py-2">
-      <img src={logo} alt="logo" className="h-14 w-14 cursor-pointer " onClick={()=>nav('/home')} />
-      <div className="flex space-x-2 items-center">
+      <img
+        src={logo}
+        alt="logo"
+        className="h-20 w-20 cursor-pointer "
+        onClick={() => nav("/home")}
+      />
+      <div className="flex space-x-6 items-center">
         {LINKS.map((item, i) => {
           if (!item.authorized.length || item.authorized.includes(User.role))
             return (
               <div key={i}>
-                <NavLink to={item.to} className="text-lg font-semibold">
+                <NavLink to={item.to} className="text-2xl font-semibold">
                   {item.title}
                 </NavLink>
               </div>
             );
           return null;
         })}
-        <Dropdown menu={{ items: HoverOptions }} className="cursor-pointer">
-          <Avatar size={35} icon={<img src={avatar} alt="avatar" />} />
+        <Dropdown
+          menu={{ items: HoverOptions }}
+          trigger={['click']}
+          className=" relative cursor-pointer"
+        >
+          <Avatar size={55} icon={<img src={avatar} alt="avatar" />} />
         </Dropdown>
       </div>
     </div>

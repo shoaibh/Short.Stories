@@ -1,7 +1,7 @@
 import api from "../main";
 
-export async function getAllTweets() {
-  const res = await api.get("/story");
+export async function getAllTweets(page:number,limit:number) {
+  const res = await api.get(`/story/?page=${page}&limit=${limit}`);
   return res;
 }
 

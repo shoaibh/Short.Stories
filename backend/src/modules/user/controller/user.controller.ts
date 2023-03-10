@@ -1,7 +1,8 @@
-import { Controller, Get } from "@nestjs/common";
-import { Body, Param, UseGuards } from "@nestjs/common/decorators";
+import { Controller, DefaultValuePipe, Get, ParseIntPipe } from "@nestjs/common";
+import { Body, Param, Query, UseGuards } from "@nestjs/common/decorators";
 import { HttpStatus } from "@nestjs/common/enums";
 import { HttpException } from "@nestjs/common/exceptions";
+import { IPaginationOptions } from "nestjs-typeorm-paginate";
 import { AuthGuard } from "src/guards/auth.guard";
 import Roles, { RoleGuard } from "src/guards/role.guard";
 import { UserService } from "../services/user.service";
@@ -13,8 +14,15 @@ export class UserController {
   @Get()
   @UseGuards(RoleGuard)
   @Roles(["admin"])
-  getAllUsers() {
-    return this.userService.GetAllUser();
+  getAllUsers(
+    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query("limit", new DefaultValuePipe(5), ParseIntPipe) limit: number
+  ) {
+    const options: IPaginationOptions = {
+      page,
+      limit,
+    };
+    return this.userService.GetAllUsers(options);
   }
   @Get("/:id")
   getUsers(@Param("id") id: string, @Body() { jwt }: any) {

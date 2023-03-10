@@ -5,7 +5,7 @@ export async function getUser(id: string) {
   return res.data;
 }
 
-export async function getAllUsers() {
-  const res:any = await api.get('/user');
+export async function getAllUsers(page:number,limit:number) {
+  const res:any = await api.get(`/user/?page=${page}&limit=${limit}`);
   return res.data;
 }

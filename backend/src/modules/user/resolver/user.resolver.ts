@@ -9,8 +9,8 @@ import { Args, Context, Query, Resolver } from "@nestjs/graphql";
 import { UserPagination } from "src/graphql/schemas/pagination.schema";
 import { User } from "src/graphql/schemas/user.shema";
 
-@Resolver((of) => User)
-// @UseGuards(AuthGuard)
+@Resolver()
+@UseGuards(AuthGuard)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
@@ -38,17 +38,14 @@ export class UserResolver {
     return this.userService.GetAllUsers(options);
   }
 
-  @Query(() => String, { name: "getUser" })
-  getUser(@Args("id") id: any, @Context() { req: { jwt } }: any) {
-    console.log(id);
-    return "this.userService.GetUser(id)";
-    //   // return this.userService.GetUser(id);
-    //   if (["admin"].includes(jwt.role) || jwt.id === id)
-    //     return this.userService.GetUser(id);
+  @Query(() => User, { name: "getUser" })
+  getUser(@Args("id") id: string, @Context() { req: { jwt } }: any) {
+    if (["admin"].includes(jwt.role) || jwt.id === id)
+      return this.userService.GetUser(id);
 
-    //   throw new HttpException(
-    //     "FORBIDDEN: Only ADMIN or RESOURCE OWNER can access this info",
-    //     HttpStatus.FORBIDDEN
-    //   );
+    throw new HttpException(
+      "FORBIDDEN: Only ADMIN or RESOURCE OWNER can access this info",
+      HttpStatus.FORBIDDEN
+    );
   }
 }

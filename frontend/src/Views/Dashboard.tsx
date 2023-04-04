@@ -15,7 +15,6 @@ export default function Dashboard() {
     queryKey: ["users", page],
     queryFn: () => getAllUsers(page, LIMIT),
   });
-
   const onPageChange = (page: number, pageSize: number) => {
     nav(`/dashboard?page=${page}`);
   };
@@ -38,7 +37,7 @@ export default function Dashboard() {
           defaultCurrent={1}
           current={data?.meta.currentPage}
           pageSize={LIMIT}
-          total={data?.meta.totalItems}
+          total={data?.meta.totalItems-1}
           onChange={onPageChange}
           disabled={page > data?.meta.totalPages}
         />
@@ -57,12 +56,12 @@ function UserCard({ data }: any) {
     >
       <div className="ml-14">
         <Avatar className=" h-16 w-16 flex justify-center items-center">
-          {data.userName[0]}
+          {data?.userName[0]}
         </Avatar>
       </div>
       <div>
         {Object.keys(data).map((field) =>
-          !["profile_pic", "stories", "bio"].includes(field) ? (
+          !["profile_pic"].includes(field) ? (
             <p key={field} className="capitalize text-lg font-semibold">
               {field}:{" "}
               <span className="ml-2">{data[field] ? data[field] : "..."}</span>

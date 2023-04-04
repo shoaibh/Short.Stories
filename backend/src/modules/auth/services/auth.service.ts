@@ -8,12 +8,14 @@ import * as bcrypt from "bcrypt";
 import { User } from "src/orm/entity/User.entity";
 import { serializeUser } from "src/util/serialization";
 import { jwtSign } from "src/util/jwt";
+import { RegisterInputs, SignInInput } from "src/graphql/graphql";
+import { JWT } from "src/graphql/schemas/jwt.schema";
 
 @Injectable()
 export class AuthService {
   constructor(@InjectRepository(User) private user: Repository<User>) {}
 
-  async register(data: any,role:string) {
+  async register(data: RegisterInputs, role: string) {
     const hashpassword = await bcrypt.hash(data.password, 10);
     const user = this.user.create({
       ...data,
@@ -29,7 +31,7 @@ export class AuthService {
       throw new HttpException("username already exsits", HttpStatus.CONFLICT);
     }
   }
-  async signin(data: any) {
+  async signin(data: SignInInput) {
     try {
       const res = await this.user.findOneByOrFail({ userName: data.userName });
       if (!(await bcrypt.compare(data.password, res.password))) {
@@ -45,10 +47,9 @@ export class AuthService {
     }
   }
 
-  async getloggeduser(token: string) {
+  async getloggeduser(jwt: JWT) {
     try {
-      const data = jwt.verify(token, process.env.JWT_SECRET);
-      const res = await this.user.findOneByOrFail({ id: data.id });
+      const res = await this.user.findOneByOrFail({ id: jwt.id });
       return serializeUser(res);
     } catch (err) {
       throw new HttpException(err.message, HttpStatus.FORBIDDEN);

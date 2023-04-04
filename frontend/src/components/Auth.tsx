@@ -15,14 +15,12 @@ export default function Auth({ login }: auth) {
   const loginFields = [
     {
       fieldName: "userName",
-      value: "hasrh",
       type: "text",
       placeholder: "Username",
       rules: {},
     },
     {
       fieldName: "password",
-      value: "Har@1234",
       type: "password",
       placeholder: "Password",
       rules: {
@@ -69,18 +67,24 @@ export default function Auth({ login }: auth) {
     formState: { errors },
   } = useForm();
   const nav = useNavigate();
-  const { setUser }:any = useContext(RootContext);
+  const { setUser }: any = useContext(RootContext);
 
   const loginUser = useMutation(loginApi, {
     onSuccess: (data) => {
       notify.success("login successful");
       setUser(data);
     },
+    onError: (error: Error) => {
+      notify.error(error.message);
+    },
   });
   const registerUser = useMutation(registerApi, {
     onSuccess: (data) => {
       notify.success("login successful");
       setUser(data);
+    },
+    onError: (error: Error) => {
+      notify.error(error.message);
     },
   });
 
@@ -99,11 +103,6 @@ export default function Auth({ login }: auth) {
     nav(`/auth/${login ? "register" : "login"}`);
   };
 
-  if (loginUser.error || registerUser.error) {
-    let error: any = login ? loginUser.error : registerUser.error;
-    notify.error(error.response.data.message);
-  }
-  
   if (loginUser.isLoading || registerUser.isLoading)
     return (
       <div className="my-10">

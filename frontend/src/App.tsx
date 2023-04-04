@@ -15,9 +15,10 @@ function App() {
     queryFn: getLoggedUser,
     onSuccess(data) {
       setUser(data);
+      notify.success("Welcome back")
     },
-    onError(error) {
-      console.log(error);
+    onError(error:any) {
+      notify.error(error.message);
     },
     enabled: token ? true : false,
     retry: false,

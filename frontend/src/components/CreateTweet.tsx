@@ -3,11 +3,12 @@ import { Avatar } from "antd";
 import Styles from "../styles";
 import { useForm } from "react-hook-form";
 import { RootContext } from "../context/RootContext";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { createNewTweet } from "../axios/apis/tweets.api";
 import notify from "../utils/Notify";
 import { Loading } from "./Loader";
 import { AxiosError } from "axios";
+
 export default function CreateTweet() {
   const {
     register,
@@ -16,10 +17,12 @@ export default function CreateTweet() {
     watch,
     formState: { errors },
   } = useForm();
+  const queryClient = useQueryClient()
   const { User }: any = useContext(RootContext);
   const createTweet = useMutation(createNewTweet, {
     onSuccess: () => {
       notify.success("new tweet created successfully");
+      queryClient.invalidateQueries({ queryKey: ["Stories", 1] })
     },
     onError: (err: AxiosError<{message:string}>) => {
       notify.error(err.response?.data.message??'something went wrong');

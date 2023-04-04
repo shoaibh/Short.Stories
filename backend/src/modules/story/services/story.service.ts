@@ -12,40 +12,22 @@ export class StoryService {
   async getAllStories(options: IPaginationOptions): Promise<Pagination<Story>> {
     const qb = this.story.createQueryBuilder("story");
     qb.innerJoinAndSelect("story.user", "user")
-      .select(["story","user.userName","user.id"])
+      .select(["story", "user.userName", "user.id"])
       .orderBy("story.created_at", "DESC");
-    // qb.innerJoin('story.user','user')
     return paginate<Story>(qb, options);
   }
 
-  async createStory(data: any) {
-    const newStory = this.story.create({ ...data.data, user: data.jwt.id });
+  async createStory(data: any,jwt:any) {
+    const newStory = this.story.create({ ...data, user: jwt.id });
 
     try {
       const res = await this.story.save(newStory);
-      return res;
+      return "New Story Created";
     } catch (err) {
       throw new HttpException(err.message, err.status);
     }
   }
-  // async getAllStories() {
-  //   try {
-  //     const res = await this.story.find({
-  //       select: {
-  //         user: {
-  //           id: true,
-  //           userName: true,
-  //         },
-  //       },
-  //       relations: {
-  //         user: true,
-  //       },
-  //     });
-  //     return res;
-  //   } catch (err) {
-  //     return err;
-  //   }
-  // }
+
   async getStory(id: string) {
     try {
       const res = await this.story.findOneOrFail({

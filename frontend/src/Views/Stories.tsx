@@ -22,10 +22,9 @@ export default function Stories() {
       notify.error((error as Error).message);
     },
     enabled: User ? true : false,
-
     retry: false,
   });
-  const response = data?.data;
+
   const onPageChange = (page: number, pageSize: number) => {
     nav(`/?page=${page}`);
   };
@@ -39,16 +38,16 @@ export default function Stories() {
           <Loading />
         ) : (
           <div className="tweets_list my-3 space-y-4 flex flex-col  items-center">
-            {response?.items.map((item: any) => (
+            {data?.items.map((item: any) => (
               <Tweet key={item.id} data={item} />
             ))}
             <Pagination
               defaultCurrent={1}
-              current={response?.meta.currentPage}
+              current={data?.meta.currentPage}
               pageSize={LIMIT}
-              total={response?.meta.totalItems}
+              total={data?.meta.totalItems}
               onChange={onPageChange}
-              disabled={page > response?.meta.totalPages}
+              disabled={page > data?.meta.totalPages}
             />
           </div>
         )}

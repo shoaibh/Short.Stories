@@ -5,7 +5,7 @@ import { Migrations } from "src/orm/migration/main";
 export default registerAs("database", () => {
   return {
     type: "postgres",
-    logging: true,
+    // logging: true,
     host: process.env.POSTGRES_HOST,
     port: parseInt(process.env.POSTGRES_PORT),
     username: process.env.POSTGRES_USER,

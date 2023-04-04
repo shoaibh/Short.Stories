@@ -18,7 +18,7 @@ export class RoleGuard implements CanActivate {
     if (!roles) {
       return true;
     }
-    return roles.flat().includes(req.body.jwt.role);
+    return roles.flat().includes(req.jwt.role);
   }
 }
 

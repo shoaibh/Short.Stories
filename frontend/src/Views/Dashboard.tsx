@@ -20,13 +20,13 @@ export default function Dashboard() {
   };
   if (isLoading)
     return (
-      <div className="flex  flex-col justify-center items-center h-full w-screen">
+      <div className="flex  flex-col justify-center items-center h-3/4">
         <Loading />
       </div>
     );
 
   return (
-    <div className="text-base px-5 py-2 md:w-5/6 md:mx-auto">
+    <div className="text-base px-5 pb-2 md:w-5/6 md:mx-auto">
       <p className={`${Styles.container} text-center text-xl`}>users</p>
       <div className="mb-8 flex flex-col items-center">
         {data?.items.map((user: any) =>

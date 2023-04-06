@@ -30,6 +30,7 @@ export interface StorySchema {
     title: string;
     content: string;
     created_at: DateTime;
+    user: User;
 }
 
 export interface User {

@@ -1,4 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import { User } from "./user.shema";
 
 @ObjectType()
 export class StorySchema {
@@ -13,4 +14,7 @@ export class StorySchema {
 
   @Field()
   created_at: Date;
+
+  @Field(type=>User)
+  user: User;
 }

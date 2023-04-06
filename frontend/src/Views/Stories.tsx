@@ -8,6 +8,7 @@ import { Loading } from "../components/Loader";
 import Tweet from "../components/Tweet";
 import { RootContext } from "../context/RootContext";
 import notify from "../utils/Notify";
+import PopupModel from "../components/Popupmodel";
 
 export default function Stories() {
   const { User }: any = useContext(RootContext);
@@ -26,18 +27,18 @@ export default function Stories() {
   });
 
   const onPageChange = (page: number, pageSize: number) => {
-    nav(`/?page=${page}`);
+    nav(`/home?page=${page}`);
   };
   return (
-    <div className="px-5 py-3 ">
+    <div className="px-5 pb-3 ">
       <div className="pb-5 border-gray-50 border-b-4 flex flex-col items-center">
-        <CreateTweet />
+     <PopupModel/>
       </div>
       <div>
         {isLoading ? (
           <Loading />
         ) : (
-          <div className="tweets_list my-3 space-y-4 flex flex-col  items-center">
+          <div className="tweets_list my-3  pb-28 space-y-4 flex flex-col  items-center">
             {data?.items.map((item: any) => (
               <Tweet key={item.id} data={item} />
             ))}

@@ -19,12 +19,12 @@ export default function Profile() {
 
   if (isLoading)
     return (
-      <div className="flex  flex-col justify-center items-center h-full w-screen">
+      <div className="flex  flex-col justify-center items-center h-3/4">
         <Loading />
       </div>
     );
   return (
-    <div className="py-9 px-5 md:w-5/6 md:mx-auto">
+    <div className="pb-14 px-5 md:w-5/6 md:mx-auto">
       <div className="flex flex-col justify-center items-center">
         <Avatar
         size={165}

@@ -15,19 +15,19 @@ function App() {
     queryFn: getLoggedUser,
     onSuccess(data) {
       setUser(data);
-      notify.success("Welcome back")
+      notify.success("Welcome back");
     },
-    onError(error:any) {
+    onError(error: any) {
       notify.error(error.message);
     },
-    enabled: token ? true : false,
+    enabled: token && !User ? true : false,
     retry: false,
   });
   if (isLoading) return <Loader />;
 
   return (
     <RootContext.Provider value={{ User, setUser }}>
-      <RouterProvider router={router} fallbackElement={<Loading/>} />
+      <RouterProvider router={router} fallbackElement={<Loading />} />
     </RootContext.Provider>
   );
 }

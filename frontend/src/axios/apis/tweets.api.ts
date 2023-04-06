@@ -2,7 +2,7 @@ import api from "../main";
 
 export async function getAllTweets(page: number, limit: number) {
   const gql = {
-    query: `query  {allStories(page:${page}, limit:${limit}){items{id,title,content,created_at}meta{totalItems,itemCount,totalPages}}}`,
+    query: `query  {allStories(page:${page}, limit:${limit}){items{id,title,content,created_at,user{userName}}meta{totalItems,itemCount,totalPages}}}`,
   };
   const response = await api({ data: gql });
   if (response?.data?.errors?.length) {

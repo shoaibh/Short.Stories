@@ -1,5 +1,5 @@
 .loader {
-  animation: myAnim 2s ease 0ms infinite alternate-reverse none;
+  animation: myAnim 1s ease 0ms infinite alternate-reverse none;
 }
 .logo {
   animation: logoScale 1s ease 0s 2 alternate-reverse both;

@@ -133,13 +133,14 @@ export default function Header() {
 
 export function TopHeader({ HoverOptions }: any) {
   const scrollDirection = useScrollDirection();
+  console.log(scrollDirection)
   const route = useLocation().pathname.split("/").slice(1);
 
   return (
     <div
       className={`sticky z-30 ${
-        scrollDirection === "down" ? "-top-24" : "top-0"
-      } top-0 h-24 bg-sky-300 px-10 flex items-center justify-between sm:hidden transition-all`}
+        scrollDirection === "down" ? "-top-20" : "top-0"
+      } h-20 bg-sky-300 px-10 flex items-center justify-between sm:hidden transition-all`}
     >
       <img src={logo} alt="" className="w-14 h-14 rounded-full object-cover"/>
       <p className="text-2xl font-semibold capitalize">{route[0]}</p>

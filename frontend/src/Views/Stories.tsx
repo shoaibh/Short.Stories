@@ -32,7 +32,12 @@ export default function Stories() {
   return (
     <div className="px-5 pb-3 ">
       <div className="pb-5 border-gray-50 border-b-4 flex flex-col items-center">
-     <PopupModel/>
+        <div className="w-full block sm:hidden">
+          <PopupModel Element={CreateTweet} />
+        </div>
+        <div className="w-full hidden sm:flex sm:justify-center">
+          <CreateTweet />
+        </div>
       </div>
       <div>
         {isLoading ? (

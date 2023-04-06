@@ -9,7 +9,11 @@ import notify from "../utils/Notify";
 import { Loading } from "./Loader";
 import { AxiosError } from "axios";
 
-export default function CreateTweet() {
+type Props = {
+  handleOk?: () => void;
+  onCancel?: () => void;
+};
+export default function CreateTweet({handleOk}:Props) {
   const {
     register,
     handleSubmit,
@@ -17,15 +21,16 @@ export default function CreateTweet() {
     watch,
     formState: { errors },
   } = useForm();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { User }: any = useContext(RootContext);
   const createTweet = useMutation(createNewTweet, {
     onSuccess: () => {
       notify.success("new tweet created successfully");
-      queryClient.invalidateQueries({ queryKey: ["Stories", 1] })
+      handleOk?.()
+      queryClient.invalidateQueries({ queryKey: ["Stories", 1] });
     },
-    onError: (err: AxiosError<{message:string}>) => {
-      notify.error(err.response?.data.message??'something went wrong');
+    onError: (err: AxiosError<{ message: string }>) => {
+      notify.error(err.response?.data.message ?? "something went wrong");
     },
   });
 

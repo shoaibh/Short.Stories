@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import writeIcon from "../assets/write.png";
 import { Button, Modal } from "antd";
 
-const PopupModel = ({ children }: any) => {
+const PopupModel = ({ Element }: any) => {
   const [open, setOpen] = useState(false);
 
   const showModal = () => {
@@ -32,7 +32,7 @@ const PopupModel = ({ children }: any) => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        {children }
+        <Element handleOk={handleOk} onCancel={handleCancel}/>
       </Modal>
     </>
   );

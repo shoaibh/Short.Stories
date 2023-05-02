@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate} from "react-router-dom";
 import logo from "../assets/dogo.png";
 import { RootContext } from "../context/RootContext";
 import { Dropdown, Avatar } from "antd";
@@ -133,8 +133,8 @@ export default function Header() {
 
 export function TopHeader({ HoverOptions }: any) {
   const scrollDirection = useScrollDirection();
-  console.log(scrollDirection)
   const route = useLocation().pathname.split("/").slice(1);
+  const nav = useNavigate();
 
   return (
     <div
@@ -142,7 +142,7 @@ export function TopHeader({ HoverOptions }: any) {
         scrollDirection === "down" ? "-top-20" : "top-0"
       } h-20 bg-sky-300 px-10 flex items-center justify-between sm:hidden transition-all`}
     >
-      <img src={logo} alt="" className="w-14 h-14 rounded-full object-cover"/>
+      <img src={logo} alt="" className="w-14 h-14 rounded-full object-cover" onClick={()=>nav('/home')}/>
       <p className="text-2xl font-semibold capitalize">{route[0]}</p>
       <Dropdown
         menu={{ items: HoverOptions }}

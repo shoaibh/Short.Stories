@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { join } from "path";
-import dbConfig from "./db/db.config";
+import dbConfig, { typeOrmAsyncConfig } from "./db/db.config";
 import { AuthModule } from "./modules/auth/auth.module";
 import { StoryModule } from "./modules/story/story.module";
 import { UserModule } from "./modules/user/user.module";
@@ -15,12 +15,7 @@ import { UserModule } from "./modules/user/user.module";
       isGlobal: true,
       load: [dbConfig],
     }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: async (config: ConfigService) => ({
-        ...config.get("database"),
-      }),
-    }),
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       playground: true,
